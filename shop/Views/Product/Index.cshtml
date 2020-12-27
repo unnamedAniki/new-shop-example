@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+}
+@model ProductViewModel
+    <div class="mdl-cell--3-col mdl-grid mdl-cell--hide-phone mdl-cell--hide-tablet">
+        @await Component.InvokeAsync("NavigationМenu")
+    </div>
+    <div class="mdl-cell--8-col mdl-grid">
+        @foreach (var p in Model.Products)
+        {
+            @Html.Partial("ProductSummary", p);
+        }
+        <nav class="page d-flex justify-content-center mdl-cell--12-col">
+            <div page-model="@Model.PagingInfo" page-action="Index"
+                 page-classes-enabled="true"
+                 page-class="mdl-button"
+                 page-class-normal="mdl-color-text--grey mdl-button--colored"
+                 page-url-category=@Model.CurrentCategory
+                 page-class-selected="mdl-js-button mdl-js-ripple-effect">
+            </div>
+        </nav>
+    </div>
+

@@ -1,0 +1,60 @@
+﻿/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+body > *{
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+.mdl-card__media > img {
+    max-width: 100%;
+}
+.mdl-card--border > p {
+    max-width: 100%;
+    margin: 5pt;
+}
+.mdl-card__title {
+    align-items: center;
+    font-size: 34px;
+    font-family: sans-serif;
+}
+.mdl-card__actions {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+.mdl-list{
+    margin-right:5pt;
+}
+.page{
+    margin-top:5pt;
+}
+.cart-shop {
+    max-width: 200pt;
+}
+.cart > *{
+    margin:10pt;
+}
+.text-fluid {
+    max-width: 100%;
+    font-stretch: extra-expanded;
+    font-size: 10pt;
+    margin: 2pt;
+}
+.action-text {
+    font-size: 28px;
+    margin: 5pt;
+}
+img{
+    width:500px;
+    height:550px;
+}
+.image-fluid{
+    max-width:100%
+}

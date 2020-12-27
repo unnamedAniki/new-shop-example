@@ -1,0 +1,33 @@
+﻿@model Product
+	<div class="mdl-cell mdl-cell--middle">
+		<div class="mdl-card--border mdl-shadow--6dp">
+			<figure class="mdl-card__media mdl-color--grey-200">
+				<img class="img-fluid" src="~/images/image0.png" />
+			</figure>
+			<div class="text-fluid">
+				<div class="mdl-card__title">
+					<h1 class="mdl-card__title-text">@Model.Name</h1>
+				</div>
+				<div class="mdl-card__supporting-text">
+					<p>Цена: @Model.Price.ToString("c")</p>
+				</div>
+			</div>
+			<div class="mdl-card__actions mdl-card--border">
+				<form id=@Model.ProductId asp-action=AddToCart asp-controller=Cart method=post>
+					<input type=hidden asp-for=ProductId />
+					<input type=hidden name=returnUrl value=@ViewContext.HttpContext.Request.PathAndQuery() />
+					<button type=submit class="mdl-button mdl-js-button mdl-js-ripple-effect">
+						Хочу!
+					</button>
+				</form>
+				<form id=@Model.ProductId asp-action=Details method=get>
+					<input type=hidden asp-for=ProductId />
+					<input type=hidden asp-for=Name />
+					<input type=hidden name=returnUrl value=@ViewContext.HttpContext.Request.PathAndQuery() />
+					<button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+						Подробнее
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>

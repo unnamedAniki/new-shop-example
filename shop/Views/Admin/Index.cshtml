@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewBag.Title = "All products";
+    Layout = "_AdminLayout";
+}
+    <div class="cart mdl-cell mdl-cell--8-col mdl-card mdl-card--border mdl-shadow--2dp mdl-color--grey-200">
+        <h1>All products:</h1>
+        @if (Model.Any())
+        {
+            <table class="mdl-data-table mdl-js-data-table mdl-color--grey-200">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Category</th>
+                        <th class="text-center">Color</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.ProductId </td>
+                        <td class="text-center">@item.Name</td>
+                        <td class="text-center">@item.Category.Name</td>
+                        <td class="text-center">@item.Color.Name</td>
+                        <td class="text-right">@item.Price.ToString("c")</td>
+                        <td class="text-center">
+                            <form asp-action="Delete" method="post">
+                                <a asp-action="Edit" class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                                   asp-route-productId="@item.ProductId">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <input type="hidden" name="ProductId"
+                                       value="@item.ProductId" />
+                                <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center">
+                <span class="mdl-button mdl-js-button mdl-js-ripple-effect">No product</span>
+            </div>
+        }
+        <div class="text-center">
+            <span asp-action="Create" class="mdl-button mdl-js-button mdl-js-ripple-effect">Create new product...</span>
+        </div>
+    </div>

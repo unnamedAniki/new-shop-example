@@ -1,0 +1,56 @@
+﻿@model Order
+<div class="d-flex justify-content-center mdl-grid">
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--middle mdl-card
+				mdl-shadow--6dp mdl-color--grey-100">
+		<div class="mdl-card__supporting-text">
+			<h3>Checkout</h3>
+			<h4 class="text-center">Enter details about you to delivery</h4>
+			<form asp-action="Checkout" method="post">
+				<div class="mdl-grid d-flex justify-content-around">
+					<div class="mdl-cell">
+						<h5>Ship To:</h5>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="name" asp-for="Name">
+							<label class="mdl-textfield__label" for="name">Name</label>
+						</div>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="Country" asp-for="Country">
+							<label class="mdl-textfield__label" for="Country">Country</label>
+						</div>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="Region" asp-for="Region">
+							<label class="mdl-textfield__label" for="Region">Region</label>
+						</div>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="City" asp-for="City">
+							<label class="mdl-textfield__label" for="City">City</label>
+						</div>
+					</div>
+					<div class="mdl-cell">
+						<h5>Adress:</h5>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="Line1" asp-for="Line1">
+							<label class="mdl-textfield__label" for="Line1">Line1</label>
+						</div>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="Line2" asp-for="Line2">
+							<label class="mdl-textfield__label" for="Line2">Line2</label>
+						</div>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="Line3" asp-for="Line3">
+							<label class="mdl-textfield__label" for="Line3">Line3</label>
+						</div>
+						<div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="Zip" asp-for="Zip">
+							<label class="mdl-textfield__label" for="Zip">Zip</label>
+						</div>
+					</div>
+					<div class="mdl-cell text-danger" asp-validation-summary="All"></div>
+				</div>
+				<div class="text-center">
+					<button class="mdl-button mdl-js-button mdl-js-ripple-effect" type="submit">Complete order</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

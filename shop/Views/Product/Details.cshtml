@@ -1,0 +1,45 @@
+﻿@model DetailsViewModel
+
+	<div class="d-flex justify-content-center mdl-grid">
+
+		<div class="mdl-cell mdl-cell--2-col mdl-card mdl-card--border
+				mdl-shadow--6dp mdl-color--grey-100">
+			<div class="mdl-grid">
+				<ul class="mdl-list">
+					<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+							Доступные цвета:
+						</span>
+					</li>
+					@foreach (var item in Model.AvailableColor)
+					{
+						<li class="mdl-list__item">
+							<span class="mdl-list__item-primary-content">
+								@item
+							</span>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+		<div class="mdl-cell mdl-cell--4-col mdl-card mdl-card--border
+				mdl-shadow--6dp mdl-color--grey-100">
+			<div class="mdl-grid">
+				<img class="image-fluid" src="~/images/image0.png" />
+			</div>
+		</div>
+		<div class="mdl-cell mdl-cell--3-col
+             mdl-card mdl-card--border
+             mdl-shadow--6dp mdl-color--grey-100">
+			<ul class="mdl-list">
+				<li class="mdl-list__item"><h4>Описание: @Model.Product.Notes</h4></li>
+				<li class="mdl-list__item"><h5>Цена: @Model.Product.Price.ToString("c");</h5></li>
+			</ul>
+		</div>
+		<div class="mdl-cell text-center">
+			<a class="action-text mdl-button mdl-color-text--grey-700 mdl-js-button mdl-js-ripple-effect"
+			   href="@Model.ReturnUrl">
+				Back to List
+			</a>
+		</div>
+	</div>

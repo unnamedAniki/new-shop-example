@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Order>
+@{
+	ViewBag.Title = "Order";
+	Layout = "_AdminLayout";
+}
+<div class="cart mdl-cell mdl-cell--8-col mdl-card mdl-card--border mdl-shadow--2dp mdl-color--grey-200">
+	<h1>Awaiting Orders:</h1>
+	@if (Model.Any())
+	{
+	<table class="mdl-data-table mdl-js-data-table mdl-color--grey-200">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th class="mdl-data-table__cell--non-numeric">Zip</th>
+				<th class="text-center" colspan="2">Details</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+			<tr>
+				<td>@item.Name</td>
+				<td class="mdl-data-table__cell--non-numeric">@item.Zip</td>
+				<td>Product</td>
+				<td>Quantity</td>
+				<td>
+					<form asp-action="MarkShipped" method="post">
+						<input type="hidden" name="OrderId"
+							   value="@item.OrderId" />
+						<button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+							<i class="material-icons">local_post_office</i>
+						</button>
+					</form>
+				</td>
+			</tr>
+				@foreach (var lines in item.Lines)
+				{
+				<tr>
+					<td colspan="2"></td>
+					<td>@lines.Product.Name</td>
+					<td>@lines.Quantity</td>
+					<td></td>
+				</tr>
+				}
+			}
+		</tbody>
+	</table>
+	}
+	else
+	{
+	<div class="text-center">
+		<span class="mdl-button mdl-js-button mdl-js-ripple-effect">No shipped orders</span>
+	</div>	 
+	}
+</div>

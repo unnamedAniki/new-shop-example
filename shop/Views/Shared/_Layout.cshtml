@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>@ViewData["Title"] - Monolith</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/MDL/material.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="mdl-base">
+    <div class="mdl-layout mdl-js-layout mdl-color--grey-200">
+        <header class="mdl-layout__header mdl-layout__header--waterfall-hide-top mdl-color--grey-700">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Monolith</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation">
+                    <div>
+                        @await Component.InvokeAsync("CartSummary")
+                    </div>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Product" asp-action="Index">All clothes</a>
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Monolith</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="mdl-navigation__link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <a class="mdl-navigation__link" asp-action="Index" asp-controller="Product" asp-route-category="">All clothes</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="d-flex justify-content-center mdl-grid mdl-color--grey-200">
+                    @RenderBody()
+            </div>
+        </main>
+            <footer class="d-flex justify-content-center footer mdl-mini-footer mdl-color--grey-700 mdl-cell--hide-phone mdl-cell--hide-tablet">
+				<ul class="mdl-mini-footer--link-list">
+					<li>
+						<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+					</li>
+					<li>
+						<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+					</li>
+					<li>Using MDL - 2020</li>
+				</ul>
+            </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/MDL/material.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

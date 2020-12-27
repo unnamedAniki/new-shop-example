@@ -1,0 +1,10 @@
+﻿@model Cart
+	
+<a class="mdl-navigation__link"
+   asp-controller="Cart"
+   asp-action="Index"
+   asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+	<span class="mdl-badge" data-badge="@Model.Lines.Sum(p => p.Quantity)"> 
+		<i class="material-icons">local_grocery_store</i>	
+	</span>
+</a>

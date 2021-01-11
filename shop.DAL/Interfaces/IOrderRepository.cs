@@ -2,13 +2,15 @@
 using shop.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace shop.DAL.Interfaces
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IRepository<Order>
     {
-        IEnumerable<Order> Orders { get; }
-        void SaveOrder(Order order);
+        Task<IEnumerable<Order>> AllOrders();
+        Task<IEnumerable<Order>> GetOrder(Expression<Func<Order, bool>> predicate);
     }
 }

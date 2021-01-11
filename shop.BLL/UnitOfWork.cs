@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using shop.BLL.Repositories;
 using shop.DAL.Interfaces;
+using System.Threading.Tasks;
 
 namespace shop.BLL
 {
@@ -23,9 +24,9 @@ namespace shop.BLL
         public ICategoryRepository Categories => _categoryRepository = _categoryRepository ?? new EFCategoryRepository(_context);
         public IColorRepository Colors => _colorRepository = _colorRepository ?? new EFColorRepository(_context);
         public IOrderRepository Orders => _orderRepository = _orderRepository ?? new EFOrderRepository(_context);
-        public int CommitAsync()
+        public async Task<int> CommitAsync()
         {
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
         public void Dispose()
         {

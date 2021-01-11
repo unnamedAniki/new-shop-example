@@ -17,6 +17,8 @@ using shop.DAL;
 using shop.BLL;
 using shop.DAL.Interfaces;
 using shop.Web.Infrastructure;
+using shop.DAL.Services;
+using shop.BLL.Services;
 
 namespace shop.Web
 {
@@ -37,6 +39,8 @@ namespace shop.Web
             services.AddTransient<IColorRepository, EFColorRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();

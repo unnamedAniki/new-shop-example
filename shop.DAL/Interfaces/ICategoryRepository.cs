@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace shop.DAL.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
-        IEnumerable<Category> Categories { get; }
+        Task<IEnumerable<Category>> GetCategories();
     }
 }

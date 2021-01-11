@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using shop.BLL.BusinessModel;
+using shop.DAL;
 using shop.DAL.Interfaces;
 using shop.DAL.Models;
 using shop.Web.ViewModel;
@@ -12,11 +13,11 @@ namespace shop.Web.Controllers
 {
     public class CartController : Controller
     {
-        private IProductRepository _repository;
+        private IUnitOfWork _unitOfWork;
         private Cart _cart;
-        public CartController(IProductRepository repository, Cart cart)
+        public CartController(IUnitOfWork unitOfWork, Cart cart)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
             _cart = cart;
         }
         public ViewResult Index(string returnUrl)
@@ -27,18 +28,18 @@ namespace shop.Web.Controllers
                 ReturnUrl = returnUrl
             });
         }
-        public RedirectToActionResult AddToCart(int productId, string returnUrl)
+        public async Task<RedirectToActionResult> AddToCart(int productId, string returnUrl)
         {
-            var product = _repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            var product = await _unitOfWork.Products.GetProductWithColorAndCategoryInfo(productId);
             if (product != null)
             {
                 _cart.AddItem(product, 1);
             }
             return RedirectToAction("Index", new { returnUrl });
         }
-        public RedirectToActionResult RemoveFromCart(int productId, string returnUrl)
+        public async Task<RedirectToActionResult> RemoveFromCart(int productId, string returnUrl)
         {
-            Product product = _repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            var product = await _unitOfWork.Products.SingleOrDefaultAsync(p => p.ProductId == productId);
             if(product != null)
             {
                 _cart.RemoveLine(product);

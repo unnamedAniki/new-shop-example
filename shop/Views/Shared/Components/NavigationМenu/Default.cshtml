@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Category>
+﻿@model Task<IEnumerable<Category>>
     <div class="mdl-cell--12-col">
         <ul class="mdl-list mdl-shadow--2dp">
             <li class="mdl-list__item">
@@ -6,7 +6,7 @@
                    asp-action="Index"
                    asp-controller="Product"
                    asp-route-category="">All clothes</a>
-                @foreach (var category in Model)
+                @foreach (var category in Model.Result)
                 {
                 <li class="mdl-list__item">
                     @await Component.InvokeAsync("Categories", category.Name)

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace shop.DAL
 {
@@ -12,6 +13,6 @@ namespace shop.DAL
         IProductRepository Products { get; }
         ICategoryRepository Categories { get; }
         IOrderRepository Orders { get; }
-        int CommitAsync();
+        Task<int> CommitAsync();
     }
 }

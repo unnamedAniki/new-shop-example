@@ -4,29 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using shop.BLL.BusinessModel;
+using shop.DAL;
 using shop.DAL.Interfaces;
 using shop.DAL.Models;
+using shop.DAL.Services;
 
 namespace shop.Web.Controllers
 {
     public class OrderController : Controller
     {
         private Cart _cart;
-        private IOrderRepository _repository;
-        public OrderController(Cart cart, IOrderRepository repository)
+        private IOrderService _orderService;
+        public OrderController(Cart cart, IOrderService orderService)
         {
             _cart = cart;
-            _repository = repository;
+            _orderService = orderService;
         }
-        public IActionResult List() => View(_repository.Orders.Where(p => p.Shipped == false));
+        public IActionResult List() => View( _orderService.GetOrderByShipped(false));
         [HttpPost]
-        public IActionResult MarkShipped(int OrderId)
+        public async Task<IActionResult> MarkShipped(int OrderId)
         {
-            Order order = _repository.Orders.FirstOrDefault(p => p.OrderId == OrderId);
+            Order order = await _orderService.GetOrder(OrderId);
             if(order != null)
             {
                 order.Shipped = true;
-                _repository.SaveOrder(order);
+                await _orderService.SaveOrder(order);
             }
             return RedirectToAction(nameof(List));
         }
@@ -35,7 +37,7 @@ namespace shop.Web.Controllers
             return View(new Order());
         }
         [HttpPost]
-        public IActionResult Checkout(Order order)
+        public async Task<IActionResult> Checkout(Order order)
         {
             if (!_cart.Lines.Any())
             {
@@ -44,7 +46,7 @@ namespace shop.Web.Controllers
             if (ModelState.IsValid)
             {
                 order.Lines = _cart.Lines.ToArray();
-                _repository.SaveOrder(order);
+                await _orderService.SaveOrder(order);
                 return RedirectToAction(nameof(Completed));
             }
             else

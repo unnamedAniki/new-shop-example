@@ -1,27 +1,40 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using shop.DAL.Interfaces;
+using shop.DAL.Models;
+using shop.DAL.Services;
+
 namespace shop.Web.Controllers
 {
     public class AdminController : Controller
     {
-        private IProductRepository _repository;
-        public AdminController(IProductRepository repository)
+        private IProductService _productService;
+        public AdminController(IProductService productService)
         {
-            _repository = repository;
+            _productService = productService;
         }
         public IActionResult Index()
         {
-            return View(_repository.AdminProducts);
+            return View(_productService.GetProducts());
         }
         public ViewResult Edit(int ProductId)
         {
-            return View(_repository.AdminProducts.FirstOrDefault(p => p.ProductId == ProductId));
+            return View(_productService.GetProduct(ProductId));
         }
         [HttpPost]
-        public IActionResult Delete(int ProductId)
+        public async Task<IActionResult> Edit(Product product)
         {
-            if (_repository.DeleteProduct(ProductId))
+            if (await _productService.EditProduct(product))
+            {
+                TempData["message"] = "Selected product was edited";
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Product product)
+        {
+            if (await _productService.DeleteProduct(product))
             {
                 TempData["message"] = "Selected product was deleted";
             }

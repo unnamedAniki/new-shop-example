@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Product>
+﻿@model Task<IEnumerable<Product>>
 @{
     ViewBag.Title = "All products";
     Layout = "_AdminLayout";
 }
     <div class="cart mdl-cell mdl-cell--8-col mdl-card mdl-card--border mdl-shadow--2dp mdl-color--grey-200">
         <h1>All products:</h1>
-        @if (Model.Any())
+        @if (Model.Result.Any())
         {
             <table class="mdl-data-table mdl-js-data-table mdl-color--grey-200">
                 <thead>
@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Result)
                     {
                     <tr>
                         <td>@item.ProductId </td>

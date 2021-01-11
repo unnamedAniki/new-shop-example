@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using shop.DAL.Interfaces;
+
+using shop.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ namespace shop.Web.Components
 {
     public class ColorsViewComponent : ViewComponent
     {
-        private IColorRepository _repository;
-        public ColorsViewComponent(IColorRepository repository)
+        private IUnitOfWork _unitOfWork;
+        public ColorsViewComponent(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public IViewComponentResult Invoke()
         {
-            return View(_repository.Colors);
+            return View(Task.FromResult(_unitOfWork.Colors.GetColors()));
         }
     }
 }

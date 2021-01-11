@@ -9,34 +9,21 @@ using System.Threading.Tasks;
 
 namespace shop.BLL.Repositories
 {
-    public class EFProductRepository : IProductRepository
+    public class EFProductRepository : Repository<Product>, IProductRepository
     {
-        private ProductContext _context;
-        public EFProductRepository(ProductContext context)
+        public EFProductRepository(ProductContext context) : base(context)
         {
-            _context = context;
+            
         }
-        public IEnumerable<Product> Products => _context.Product.Include(p => p.Category).Include(p => p.Color).AsNoTracking();
-        public IEnumerable<Product> AdminProducts => _context.Product.Include(p => p.Category).Include(p => p.Color);
-        public Product GetProduct(int id) => Products.FirstOrDefault(p => p.ProductId == id);
-        public IEnumerable<string> GetColor(string name) => Products.Where(p => p.Name == name)
-                                                                .Select(p => p.Color.Name);
-        public void Detach(Product product)
+        public async Task<IEnumerable<Product>> AllProducts() => await _productContext.Product.Include(p => p.Category).Include(p => p.Color).AsNoTracking().ToListAsync();
+        public async Task<IEnumerable<Product>> AllAdminProducts() => await _productContext.Product.Include(p => p.Category).Include(p => p.Color).ToListAsync();
+        public async Task<Product> GetProduct(int id) => await _productContext.Product.SingleOrDefaultAsync(p => p.ProductId == id);
+        public async Task<Product> GetProductWithColorAndCategoryInfo(int id) => await _productContext.Product.Include(p => p.Category).Include(p => p.Color).SingleOrDefaultAsync(p => p.ProductId == id);
+        public async Task<IEnumerable<string>> GetColor(string name) => await _productContext.Product.Where(p => p.Name == name)
+                                                                .Select(p => p.Color.Name).ToListAsync();
+        private ProductContext _productContext
         {
-            _context.Entry(product).State = EntityState.Detached;
-            _context.Entry(product.Color).State = EntityState.Detached;
-            _context.Entry(product.Category).State = EntityState.Detached;
-        }
-        public bool DeleteProduct(int id)
-        {
-            var product = Products.FirstOrDefault(p => p.ProductId == id);
-            if (product != null)
-            {
-                _context.Product.Remove(product);
-                _context.SaveChanges();
-                return true;
-            }
-            return false;
+            get { return _context; }
         }
     }
 }

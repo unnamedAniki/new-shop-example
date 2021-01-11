@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace shop.BLL.Repositories
 {
-    public class EFCategoryRepository : ICategoryRepository
+    public class EFCategoryRepository : Repository<Category>, ICategoryRepository
     {
-        private ProductContext _context;
-        public EFCategoryRepository(ProductContext context)
+        public EFCategoryRepository(ProductContext context) : base(context)
         {
-            _context = context;
+
         }
-        public IEnumerable<Category> Categories => _context.Category.AsNoTracking();
+        public async Task<IEnumerable<Category>> GetCategories() => await _categoryContext.Category.ToListAsync();
+        private ProductContext _categoryContext
+        {
+            get { return _context; }
+        }
     }
 }

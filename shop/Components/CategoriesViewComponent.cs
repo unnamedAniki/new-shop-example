@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
+using shop.DAL;
 using shop.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,14 +11,14 @@ namespace shop.Web.Components
 {
     public class CategoriesViewComponent : ViewComponent
     {
-        private ICategoryRepository _repository;
-        public CategoriesViewComponent(ICategoryRepository repository)
+        private IUnitOfWork _unitOfWork;
+        public CategoriesViewComponent(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public IViewComponentResult Invoke(string name)
         {
-            return View(_repository.Categories.FirstOrDefault(p => p.Name == name));
+            return View(_unitOfWork.Categories.Find(p => p.Name == name));
         }
     }
 }

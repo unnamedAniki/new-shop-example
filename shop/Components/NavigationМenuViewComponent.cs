@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using shop.DAL.Interfaces;
+using shop.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +9,15 @@ namespace shop.Web.Components
 {
     public class NavigationМenuViewComponent : ViewComponent
     {
-        private ICategoryRepository _repository;
-        public NavigationМenuViewComponent(ICategoryRepository repository)
+        private IUnitOfWork _unitOfWork;
+        public NavigationМenuViewComponent(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
-            return View(_repository.Categories.ToList());
+            return View(_unitOfWork.Categories.GetAllAsync());
         }
     }
 }

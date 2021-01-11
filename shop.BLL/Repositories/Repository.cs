@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Query;
+
 using shop.DAL.Connect;
 using shop.DAL.Interfaces;
 using System;
@@ -37,7 +40,6 @@ namespace shop.BLL.Repositories
         {
             return _context.Set<T>().Where(predicate);
         }
-
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
@@ -47,12 +49,14 @@ namespace shop.BLL.Repositories
         {
             return _context.Set<T>().FindAsync(id);
         }
-
+        public IIncludableQueryable<T, IProperty> Include(Expression<Func<T, IProperty>> predicate)
+        {
+            return _context.Set<T>().Include(predicate);
+        }
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
         }
-
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);

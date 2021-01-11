@@ -18,7 +18,14 @@ namespace shop.BLL.Services
         }
         public async Task SaveOrder(Order order)
         {
-            //_unitOfWork.AttachRange(order.Lines.Select(p => p.Product));
+            var temp = order.Lines.Where(p => p.Product.Color != null && p.Product.Category != null).ToList();
+            foreach (var item in temp)
+            {
+                item.Product.Category = null;
+                item.Product.Color = null;
+            }
+            order.Lines = temp;
+            _unitOfWork.Orders.AttachRange(order.Lines.Select(p => p.Product));
             if (order.OrderId == 0)
                 await _unitOfWork.Orders.AddAsync(order);
             await _unitOfWork.CommitAsync();
@@ -29,7 +36,7 @@ namespace shop.BLL.Services
         }
         public IEnumerable<Order> GetOrderByShipped(bool shipped)
         {
-            return _unitOfWork.Orders.Find(p => p.Shipped == shipped);
+            return _unitOfWork.Orders.AllOrders().Result.Where(p => p.Shipped == shipped);
         }
     }
 }

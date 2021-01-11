@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Query;
+
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -16,6 +19,7 @@ namespace shop.DAL.Interfaces
         int Count();
         int Count(Expression<Func<T, bool>> predicate);
         Task AddRangeAsync(IEnumerable<T> entities);
+        IIncludableQueryable<T, IProperty> Include(Expression<Func<T, IProperty>> predicate);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
     }

@@ -21,7 +21,12 @@ namespace shop.BLL.Repositories
                                             .Include(p=>p.Lines)
                                             .ThenInclude(p=>p.Product)
                                             .AsNoTracking().ToListAsync();
-        public async Task<IEnumerable<Order>> GetOrder(Expression<Func<Order, bool>> predicate) => await _orderContext.Order.Where(predicate).ToListAsync();
+        public async Task<IEnumerable<Order>> GetOrder(Expression<Func<Order, bool>> predicate) => 
+            await _orderContext.Order.Where(predicate).ToListAsync();
+        public void AttachRange(IEnumerable<Product> entities)
+        {
+            _orderContext.AttachRange(entities);
+        }
         private ProductContext _orderContext
         {
             get { return _context; }

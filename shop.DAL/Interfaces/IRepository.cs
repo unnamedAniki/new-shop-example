@@ -20,6 +20,7 @@ namespace shop.DAL.Interfaces
         int Count(Expression<Func<T, bool>> predicate);
         Task AddRangeAsync(IEnumerable<T> entities);
         IIncludableQueryable<T, IProperty> Include(Expression<Func<T, IProperty>> predicate);
+        void Edit(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
     }

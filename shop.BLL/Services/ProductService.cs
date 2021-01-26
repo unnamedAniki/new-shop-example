@@ -25,21 +25,23 @@ namespace shop.BLL.Services
         }
         public async Task<bool> DeleteProduct(Product product)
         {
-            _unitOfWork.Products.Remove(product);
-            if (await _unitOfWork.CommitAsync() > 0)
+            var temp = await _unitOfWork.Products.SingleOrDefaultAsync(p => p.ProductId == product.ProductId);
+            if (temp != null)
             {
-                return true;
+                _unitOfWork.Products.Remove(product);
+                if (await _unitOfWork.CommitAsync() > 0)
+                {
+                    return true;
+                }
             }
             return false;
         }
-        public async Task<bool> EditProduct(Product product)
+        public async Task<bool> EditProduct(Product updatedProduct, Product product)
         {
-            var temp = _unitOfWork.Products.Find(p => p.ProductId == product.ProductId);
-            if (temp != null)
-            {
-                if(await _unitOfWork.CommitAsync() > 0)
-                    return true;
-            }
+            updatedProduct = product;
+            _unitOfWork.Products.Edit(updatedProduct);
+            if (await _unitOfWork.CommitAsync() > 0)
+                return true;
             return false;
         }
     }

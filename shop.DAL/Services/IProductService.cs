@@ -12,6 +12,6 @@ namespace shop.DAL.Services
         Task<IEnumerable<Product>> GetProducts();
         Task<Product> GetProduct(int id);
         Task<bool> DeleteProduct(Product product);
-        Task<bool> EditProduct(Product product);
+        Task<bool> EditProduct(Product updatedProduct, Product product);
     }
 }

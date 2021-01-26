@@ -1,31 +1,50 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
+using AutoMapper;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 using shop.DAL.Models;
 using shop.DAL.Services;
+using shop.Web.Resources;
 
 namespace shop.Web.Controllers
 {
     public class AdminController : Controller
     {
         private IProductService _productService;
-        public AdminController(IProductService productService)
+        private ICategoryService _categoryService;
+        private IColorService _colorService;
+        private IMapper _mapper;
+        public AdminController(IProductService productService, ICategoryService categoryService, IColorService colorService, IMapper mapper)
         {
             _productService = productService;
+            _categoryService = categoryService;
+            _colorService = colorService;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_productService.GetProducts());
+            var products = await _productService.GetProducts();
+            var productResource = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductResources>>(products);
+            return View(productResource);
         }
-        public ViewResult Edit(int ProductId)
+        public async Task<ViewResult> Edit(int ProductId)
         {
-            return View(_productService.GetProduct(ProductId));
+            var categories = _categoryService.GetCategories();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", categories.FirstOrDefault());
+            var colors = _colorService.GetColors();
+            ViewBag.Colors = new SelectList(colors, "Id", "Name", colors.FirstOrDefault());
+            return View(await _productService.GetProduct(ProductId));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(Product product)
         {
-            if (await _productService.EditProduct(product))
+            var updatedProduct = new Product();
+            if (await _productService.EditProduct(updatedProduct, product))
             {
                 TempData["message"] = "Selected product was edited";
             }

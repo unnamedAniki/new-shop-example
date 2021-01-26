@@ -28,6 +28,10 @@ namespace shop.BLL.Repositories
         {
             await _context.Set<T>().AddRangeAsync(entities);
         }
+        public void Edit(T entity)
+        {
+            _context.Set<T>().Update(entity);
+        }
         public int Count()
         {
             return _context.Set<T>().Count();

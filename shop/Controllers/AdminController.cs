@@ -41,12 +41,19 @@ namespace shop.Web.Controllers
             return View(await _productService.GetProduct(ProductId));
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Product product)
+        public async Task<IActionResult> Edit(int ProductId, ProductResources receivedProduct)
         {
-            var updatedProduct = new Product();
+            var updatedProduct = await _productService.GetProduct(ProductId);
+            if (updatedProduct == null)
+            {
+                TempData["message"] = "Selected product was not found";
+                return RedirectToAction("Index");
+            }
+            var product = _mapper.Map<ProductResources, Product>(receivedProduct);
             if (await _productService.EditProduct(updatedProduct, product))
             {
                 TempData["message"] = "Selected product was edited";
+
             }
             return RedirectToAction("Index");
         }

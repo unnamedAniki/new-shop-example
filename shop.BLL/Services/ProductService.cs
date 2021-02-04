@@ -38,7 +38,8 @@ namespace shop.BLL.Services
         }
         public async Task<bool> EditProduct(Product updatedProduct, Product product)
         {
-            updatedProduct = product;
+            updatedProduct.Name = product.Name;
+            updatedProduct.Price = product.Price;
             _unitOfWork.Products.Edit(updatedProduct);
             if (await _unitOfWork.CommitAsync() > 0)
                 return true;

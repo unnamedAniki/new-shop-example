@@ -1,8 +1,8 @@
-﻿@model object 
+﻿@model Category
 
     <a class="mdl-button mdl-js-ripple-effect
-       @(Model == ViewBag.SelectedCategory ? "mdl-button--colored mdl-color-text--grey-700" : "mdl-color-text--grey-800 mdl-js-button")"
+       @(Model.Name == ViewBag.SelectedCategory ? "mdl-button--colored mdl-color-text--grey-700" : "mdl-color-text--grey-800 mdl-js-button")"
        asp-action="Index"
        asp-controller="Product"
-       asp-route-category="@Model"
-       asp-route-page="1">@Model</a>
+       asp-route-category="@Model.Name"
+       asp-route-page="1">@Model.Name</a>

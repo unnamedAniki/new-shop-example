@@ -9,6 +9,8 @@ namespace shop.Web.Resources
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Notes { get; set; }
         public CategoryResources Category { get; set; }
         public ColorResources Color { get; set; }
     }

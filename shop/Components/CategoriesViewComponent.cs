@@ -18,7 +18,7 @@ namespace shop.Web.Components
         }
         public IViewComponentResult Invoke(string name)
         {
-            return View(_unitOfWork.Categories.Find(p => p.Name == name));
+            return View(_unitOfWork.Categories.SingleOrDefaultAsync(p => p.Name == name).Result);
         }
     }
 }

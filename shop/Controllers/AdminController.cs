@@ -53,7 +53,6 @@ namespace shop.Web.Controllers
             if (await _productService.EditProduct(updatedProduct, product))
             {
                 TempData["message"] = "Selected product was edited";
-
             }
             return RedirectToAction("Index");
         }

@@ -7,7 +7,7 @@ using shop.BLL.BusinessModel;
 using shop.DAL;
 using shop.DAL.Interfaces;
 using shop.DAL.Models;
-using shop.DAL.Services;
+using shop.BLL.Interfaces.Services;
 
 namespace shop.Web.Controllers
 {
@@ -24,7 +24,7 @@ namespace shop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> MarkShipped(int OrderId)
         {
-            Order order = await _orderService.GetOrder(OrderId);
+            Order order = await _orderService.GetOrderToShipped(OrderId);
             if(order != null)
             {
                 order.Shipped = true;

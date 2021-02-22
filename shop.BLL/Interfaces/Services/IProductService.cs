@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shop.DAL.Services
+namespace shop.BLL.Interfaces.Services
 {
     public interface IProductService
     {

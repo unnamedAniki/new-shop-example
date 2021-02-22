@@ -22,7 +22,9 @@ namespace shop.BLL.Repositories
                                             .ThenInclude(p=>p.Product)
                                             .AsNoTracking().ToListAsync();
         public async Task<IEnumerable<Order>> GetOrder(Expression<Func<Order, bool>> predicate) => 
-            await _orderContext.Order.Where(predicate).ToListAsync();
+            await _orderContext.Order.Include(p => p.Lines).ThenInclude(p => p.Product).Where(predicate).ToListAsync();
+        public async Task<Order> GetOrderToShipped(int id) =>
+            await _orderContext.Order.Include(p => p.Lines).ThenInclude(p => p.Product).Where(p => p.OrderId == id).FirstOrDefaultAsync();
         public void AttachRange(IEnumerable<Product> entities)
         {
             _orderContext.AttachRange(entities);

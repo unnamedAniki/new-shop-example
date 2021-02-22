@@ -1,6 +1,6 @@
-﻿using shop.DAL;
+﻿using shop.BLL.Interfaces.Services;
+using shop.DAL;
 using shop.DAL.Models;
-using shop.DAL.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;

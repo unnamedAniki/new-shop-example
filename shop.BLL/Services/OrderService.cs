@@ -1,6 +1,6 @@
 ﻿using shop.DAL;
 using shop.DAL.Models;
-using shop.DAL.Services;
+using shop.BLL.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +34,13 @@ namespace shop.BLL.Services
         {
             return await _unitOfWork.Orders.GetByIdAsync(orderId);
         }
+        public async Task<Order> GetOrderToShipped(int orderId)
+        {
+            return await _unitOfWork.Orders.GetOrderToShipped(orderId);
+        }
         public IEnumerable<Order> GetOrderByShipped(bool shipped)
         {
-            return _unitOfWork.Orders.AllOrders().Result.Where(p => p.Shipped == shipped);
+            return _unitOfWork.Orders.GetOrder(p => p.Shipped == shipped).Result;
         }
     }
 }

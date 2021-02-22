@@ -18,7 +18,7 @@ using shop.DAL;
 using shop.BLL;
 using shop.DAL.Interfaces;
 using shop.Web.Infrastructure;
-using shop.DAL.Services;
+using shop.BLL.Interfaces.Services;
 using shop.BLL.Services;
 
 namespace shop.Web

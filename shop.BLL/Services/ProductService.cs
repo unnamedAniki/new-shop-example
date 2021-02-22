@@ -1,6 +1,6 @@
 ﻿using shop.DAL;
 using shop.DAL.Models;
-using shop.DAL.Services;
+using shop.BLL.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +40,9 @@ namespace shop.BLL.Services
         {
             updatedProduct.Name = product.Name;
             updatedProduct.Price = product.Price;
+            updatedProduct.Notes = product.Notes;
+            updatedProduct.ColorID = product.ColorID;
+            updatedProduct.CategoryID = product.CategoryID;
             _unitOfWork.Products.Edit(updatedProduct);
             if (await _unitOfWork.CommitAsync() > 0)
                 return true;

@@ -12,6 +12,7 @@ namespace shop.DAL.Interfaces
     {
         Task<IEnumerable<Order>> AllOrders();
         Task<IEnumerable<Order>> GetOrder(Expression<Func<Order, bool>> predicate);
+        Task<Order> GetOrderToShipped(int id);
         void AttachRange(IEnumerable<Product> entities);
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using shop.DAL.Models;
-using shop.DAL.Services;
+using shop.BLL.Interfaces.Services;
 using shop.Web.Resources;
 
 namespace shop.Web.Controllers
@@ -41,7 +41,7 @@ namespace shop.Web.Controllers
             return View(await _productService.GetProduct(ProductId));
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int ProductId, ProductResources receivedProduct)
+        public async Task<IActionResult> Edit(int ProductId, EditProductResource receivedProduct)
         {
             var updatedProduct = await _productService.GetProduct(ProductId);
             if (updatedProduct == null)
@@ -49,7 +49,7 @@ namespace shop.Web.Controllers
                 TempData["message"] = "Selected product was not found";
                 return RedirectToAction("Index");
             }
-            var product = _mapper.Map<ProductResources, Product>(receivedProduct);
+            var product = _mapper.Map<EditProductResource, Product>(receivedProduct);
             if (await _productService.EditProduct(updatedProduct, product))
             {
                 TempData["message"] = "Selected product was edited";

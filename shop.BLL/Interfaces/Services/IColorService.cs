@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace shop.DAL.Services
+namespace shop.BLL.Interfaces.Services
 {
     public interface IColorService
     {

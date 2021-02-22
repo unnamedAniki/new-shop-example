@@ -15,11 +15,13 @@ namespace shop.Web.Mapping
         public MappingSettings()
         {
             CreateMap<Product, ProductResources>();
+            CreateMap<Product, EditProductResource>();
             CreateMap<Color, ColorResources>();
             CreateMap<Category, CategoryResources>();
             CreateMap<Product, DiscountResources>();
 
             CreateMap<ProductResources, Product>();
+            CreateMap<EditProductResource, Product>();
             CreateMap<ColorResources, Color>();
             CreateMap<CategoryResources, Category>();
             CreateMap<DiscountResources, Product>();
